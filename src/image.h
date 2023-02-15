@@ -1,15 +1,12 @@
-/*-----------------------------------------------
- * Author:
- * Date:
- * Description:
- ----------------------------------------------*/
-
+// Copyright 2021, Aline Normoyle, alinen
 
 #ifndef AGL_IMAGE_H_
 #define AGL_IMAGE_H_
 
 #include <iostream>
+#include <fstream>  
 #include <string>
+#include <vector>
 
 namespace agl {
 
@@ -49,7 +46,7 @@ class Image {
    * @param filename The file to load, relative to the running directory
    * @param flip Whether the file should flipped vertally before being saved
    */
-  bool save(const std::string& filename, bool flip = true) const;
+  bool save(const std::string& filename, bool flip = false) const;
 
   /** @brief Return the image width in pixels
    */
@@ -110,7 +107,6 @@ class Image {
  */
   void set(int i, const Pixel& c);
 
-
   // resize the image
   Image resize(int width, int height) const;
 
@@ -151,6 +147,12 @@ class Image {
   // Assumes that the two images are the same size
   Image multiply(const Image& other) const;
 
+  // Apply the follow calculation to the pixels in 
+  // our image and the given image: 
+  //    result.pixel = 1 - (1-this.pixel)*(1-other.pixel)
+  // Assumes that the two images are the same size 
+  Image screen(const Image& other) const;
+
   // Apply the following calculation to the pixels in 
   // our image and the given image:
   //    result.pixel = abs(this.pixel - other.pixel)
@@ -178,11 +180,15 @@ class Image {
   // Assumes that the two images are the same size
   Image alphaBlend(const Image& other, float amount) const;
 
-  // Convert the image to grayscale
+  // invert the image 
+  // result = 1 - image 
   Image invert() const;
 
   // Convert the image to grayscale
   Image grayscale() const;
+
+  // convert the image to sepia : ) 
+  Image sepia() const;
 
   // return a bitmap version of this image
   Image colorJitter(int size) const;
@@ -190,11 +196,38 @@ class Image {
   // return a bitmap version of this image
   Image bitmap(int size) const;
 
+  // return an image with gaussian blur applied to it 
+  Image gaussianBlur(int stdev) const; 
+
+  // extension func for gaussian blur 
+  // returns the neighbors of a pixel 
+  std::vector<Pixel> 
+  getNeighbors(int i, int j, std::vector<float> gaussMatrix) const; 
+
+  // returns image w/ film grain applied to it
+  // lightens/darkens px based on random number to get effect 
+  Image filmGrain()const; 
+
+  // applies overlay to image and returns said image
+  // applies screen or multiply depending on the pixel values 
+  // Assumes that the two images are the same size
+  Image overlay(const Image &other) const; 
+
+  // extension func to get neighbors for pixelate 
+  std::vector<Pixel> pixelateNeighbors(int i, int j) const; 
+
+  // "pixelate" the image 
+  // break into groups and get avg color & set 
+  Image pixelate()const; 
+
   // Fill this image with a color
   void fill(const Pixel& c);
 
  private:
-   // todo
+   int m_width; 
+   int m_height; 
+   int m_channels; 
+   char * m_data; 
 };
 }  // namespace agl
 #endif  // AGL_IMAGE_H_

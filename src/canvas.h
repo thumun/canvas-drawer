@@ -1,7 +1,7 @@
 /*-----------------------------------------------
- * Author:
- * Date:
- * Description:
+ * Author: Neha Thumu
+ * Date: 2/13/2023
+ * Description: 
  ----------------------------------------------*/
 
 #ifndef canvas_H_
@@ -14,6 +14,17 @@
 namespace agl
 {
    enum PrimitiveType {UNDEFINED, LINES, TRIANGLES};
+   struct PointAndColor{
+      int x;
+      int y; 
+      Pixel px; 
+
+      PointAndColor(int _x, int _y, Pixel _px){
+         x = _x;
+         y = _y; 
+         px = _px;
+      }
+   };
    class Canvas
    {
    public:
@@ -47,7 +58,13 @@ namespace agl
       void background(unsigned char r, unsigned char g, unsigned char b);
 
    private:
-      Image _canvas;
+      Image m_img;
+      int m_width;  // do I need these 
+      int m_height; // do I need these 
+      Pixel m_currColor; 
+      PrimitiveType m_currentType; 
+      std::vector<PointAndColor> verticies;
+
    };
 }
 
