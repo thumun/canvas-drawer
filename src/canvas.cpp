@@ -43,7 +43,6 @@ void Canvas::end()
 void Canvas::vertex(int x, int y)
 {
    verticies.push_back(PointAndColor(x, y, m_currColor));
-  
 }
 
 void Canvas::color(unsigned char r, unsigned char g, unsigned char b)
