@@ -9,6 +9,7 @@
 
 #include <string>
 #include <vector>
+#include <cmath>
 #include "image.h"
 
 namespace agl
@@ -56,6 +57,13 @@ namespace agl
 
       // Fill the canvas with the given background color
       void background(unsigned char r, unsigned char g, unsigned char b);
+
+      // Implicit line equation -> draws line btwn pt a and b 
+      void bresenham(PointAndColor a, PointAndColor b);
+
+      void drawlineHigh(PointAndColor a, PointAndColor b);
+
+      void drawlineLow(PointAndColor a, PointAndColor b);
 
    private:
       Image m_img;

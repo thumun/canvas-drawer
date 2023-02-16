@@ -1,4 +1,19 @@
 // Copyright 2021, Aline Normoyle, alinen
+/**
+ * This is the img operations file for Assignment 03: Canvas-Drawer.
+ *
+ * (copied from A02)
+ * It has various operations/filters that can be applied to images. 
+ * The operations are: resize, fliphorizontal, subimage, replace, swirl, add
+ * subtract, difference, inverse, multiply, screen, darkest, lightest, 
+ * gammacorrect, alphablend, greyscale, sepia, gaussian blur, film grain, 
+ * overlay, and pixelate.
+ * 
+ * There is also the ability to save and load images.  
+ *
+ * @author: Neha Thumu
+ * @version: Feburary 16, 2023
+ */
 
 #include "image.h"
 
