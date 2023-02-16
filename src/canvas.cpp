@@ -158,7 +158,47 @@ void Canvas::drawlineLow(PointAndColor a, PointAndColor b)
       } else {
          F += 2*H;
       }
-   }   
+   }
 }
 
+ void Canvas::makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c)
+{
+
+   int ymin = min(a.y, b.y);
+   ymin = min(ymin, c.y);
+
+   int ymax = max(a.y, b.y);
+   ymax = max(ymax, c.y);
+
+   int xmin = min(a.x, b.x);
+   xmin = min(xmin, c.x);
+
+   int xmax = max(a.x, b.x);
+   xmax = max(xmax, c.x);
+
+   for (int y = ymin; y < ymax; y++){
+      for (int x = xmin; x < xmax; x++){
+
+         // alpha = verticies[0]
+         // beta = verticies[1]
+         // gamma = verticies[2]
+
+         float alpha; 
+         float beta; 
+         float gamma; 
+
+         if (alpha > 0 && beta > 0 && gamma > 0){
+            Pixel newColor;
+
+            newColor.r = verticies[0].px.r*alpha + verticies[1].px.r*beta + verticies[2].px.r*gamma;
+            newColor.g = verticies[0].px.g*alpha + verticies[1].px.g*beta + verticies[2].px.g*gamma;
+            newColor.b = verticies[0].px.b*alpha + verticies[1].px.b*beta + verticies[2].px.b*gamma;
+
+            m_img.set(y, x, newColor); 
+         }
+
+      }
+   }
+
+}
 

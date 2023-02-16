@@ -65,6 +65,8 @@ namespace agl
 
       void drawlineLow(PointAndColor a, PointAndColor b);
 
+      void makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c);
+
    private:
       Image m_img;
       int m_width;  // do I need these 
