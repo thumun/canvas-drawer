@@ -1,7 +1,15 @@
 /*-----------------------------------------------
  * Author: Neha Thumu
  * Date: 2/13/2023
- * Description: 
+ * Description:
+ * This canvas class handles the various functions involved in drawing lines
+ * and triangles. There is also the option to set a background color and to set
+ * color(s) for lines and triangles. (multiple colors for a line/triangle will
+ * have gradient)
+ * To draw a line: you need two verticies.
+ * To draw a triangle: you need three verticies.
+ * End() will draw the line/triangles based on the verticies.
+ * Begin() is the way to set if you want to draw a line or triangle.
  ----------------------------------------------*/
 
 #ifndef canvas_H_
@@ -14,15 +22,22 @@
 
 namespace agl
 {
-   enum PrimitiveType {UNDEFINED, LINES, TRIANGLES};
-   struct PointAndColor{
+   enum PrimitiveType
+   {
+      UNDEFINED,
+      LINES,
+      TRIANGLES
+   };
+   struct PointAndColor
+   {
       int x;
-      int y; 
-      Pixel px; 
+      int y;
+      Pixel px;
 
-      PointAndColor(int _x, int _y, Pixel _px){
+      PointAndColor(int _x, int _y, Pixel _px)
+      {
          x = _x;
-         y = _y; 
+         y = _y;
          px = _px;
       }
    };
@@ -33,7 +48,7 @@ namespace agl
       virtual ~Canvas();
 
       // Save to file
-      void save(const std::string& filename);
+      void save(const std::string &filename);
 
       // Draw primitives with a given type (either LINES or TRIANGLES)
       // For example, the following draws a red line followed by a green line
@@ -60,26 +75,28 @@ namespace agl
 
    private:
       Image m_img;
-      int m_width;  // do I need these 
-      int m_height; // do I need these 
-      Pixel m_currColor; 
-      PrimitiveType m_currentType; 
+      int m_width; 
+      int m_height;
+      Pixel m_currColor;
+      PrimitiveType m_currentType;
       std::vector<PointAndColor> verticies;
 
-      // Implicit line equation -> draws line btwn pt a and b 
+      // draws line from a to b
       void bresenham(PointAndColor a, PointAndColor b);
 
+      // handles case where line slope is positive 
       void drawlineHigh(PointAndColor a, PointAndColor b);
 
+      // handles case where line slope is negative 
       void drawlineLow(PointAndColor a, PointAndColor b);
 
+      // draws a triangle based on three vertices
       void makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c);
 
+      // the implicit line formula 
+      // used in makeTriangle to calculate alpha, beta, and gamma
       float implicitLine(PointAndColor input, PointAndColor p1, PointAndColor p2);
-
    };
 }
 
 #endif
-
-
