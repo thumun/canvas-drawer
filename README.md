@@ -49,7 +49,8 @@ LINE:
 ![lineEX](https://github.com/thumun/canvas-drawer/blob/main/primitiveTypes/line-color-interpolation.png)
 
 TRAINGLES:
-![triangle]([https://github.com/thumun/canvas-drawer/blob/main/primitiveTypes/line-color-interpolation.png](https://github.com/thumun/canvas-drawer/blob/main/primitiveTypes/triangle.png))
+![triangle]([https://github.com/thumun/canvas-drawer/blob/main/primitiveTypes/line-color-interpolation.png](https://github.com/thumun/canvas-drawer/blob/main/primitiveTypes/triangle.png)
+
 ![quadw/triangles](https://github.com/thumun/canvas-drawer/blob/main/primitiveTypes/quad.png)
 
 ## Results
