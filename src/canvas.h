@@ -58,6 +58,14 @@ namespace agl
       // Fill the canvas with the given background color
       void background(unsigned char r, unsigned char g, unsigned char b);
 
+   private:
+      Image m_img;
+      int m_width;  // do I need these 
+      int m_height; // do I need these 
+      Pixel m_currColor; 
+      PrimitiveType m_currentType; 
+      std::vector<PointAndColor> verticies;
+
       // Implicit line equation -> draws line btwn pt a and b 
       void bresenham(PointAndColor a, PointAndColor b);
 
@@ -67,13 +75,7 @@ namespace agl
 
       void makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c);
 
-   private:
-      Image m_img;
-      int m_width;  // do I need these 
-      int m_height; // do I need these 
-      Pixel m_currColor; 
-      PrimitiveType m_currentType; 
-      std::vector<PointAndColor> verticies;
+      float implicitLine(PointAndColor input, PointAndColor p1, PointAndColor p2);
 
    };
 }

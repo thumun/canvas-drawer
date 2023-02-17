@@ -29,15 +29,16 @@ void Canvas::begin(PrimitiveType type)
 
 void Canvas::end()
 {
-   // draw everything as lines
-   // when drawing lines --> need to take into account color ratio to create blend
-   // if it's a triangle --> fill algorithm 
-   if (m_currentType == PrimitiveType::LINES && verticies.size() == 2){
-      // call my implicit line equ 
-      bresenham(verticies[0], verticies[1]);
+
+   if (m_currentType == PrimitiveType::LINES && verticies.size() % 2 == 0){
+      for (int i = 0; i < verticies.size(); i+=2){
+         bresenham(verticies[i], verticies[i+1]);
+      }
    } 
-   else if (m_currentType == PrimitiveType::TRIANGLES && verticies.size() == 3){
-      // call my draw triangle equ 
+   else if (m_currentType == PrimitiveType::TRIANGLES && verticies.size() % 3 == 0){
+      for (int i = 0; i < verticies.size(); i+=3){
+         makeTriangle(verticies[i], verticies[i+1], verticies[i+2]);
+      }
    }
 }
 
@@ -90,7 +91,6 @@ void Canvas::bresenham(PointAndColor a, PointAndColor b)
    }  
 }
 
-// gotta test this !!
 void Canvas::drawlineHigh(PointAndColor a, PointAndColor b)
 {
    int x = a.x;
@@ -163,7 +163,6 @@ void Canvas::drawlineLow(PointAndColor a, PointAndColor b)
 
  void Canvas::makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c)
 {
-
    int ymin = min(a.y, b.y);
    ymin = min(ymin, c.y);
 
@@ -179,26 +178,26 @@ void Canvas::drawlineLow(PointAndColor a, PointAndColor b)
    for (int y = ymin; y < ymax; y++){
       for (int x = xmin; x < xmax; x++){
 
-         // alpha = verticies[0]
-         // beta = verticies[1]
-         // gamma = verticies[2]
+         PointAndColor pt(x, y, m_currColor);
 
-         float alpha; 
-         float beta; 
-         float gamma; 
+         float alpha = implicitLine(pt, b, c)/implicitLine(a, b, c); 
+         float beta = implicitLine(pt, c, a)/implicitLine(b, c, a); 
+         float gamma = implicitLine(pt, a, b)/implicitLine(c, a, b); 
 
          if (alpha > 0 && beta > 0 && gamma > 0){
             Pixel newColor;
 
-            newColor.r = verticies[0].px.r*alpha + verticies[1].px.r*beta + verticies[2].px.r*gamma;
-            newColor.g = verticies[0].px.g*alpha + verticies[1].px.g*beta + verticies[2].px.g*gamma;
-            newColor.b = verticies[0].px.b*alpha + verticies[1].px.b*beta + verticies[2].px.b*gamma;
+            newColor.r = a.px.r*alpha + b.px.r*beta + c.px.r*gamma;
+            newColor.g = a.px.g*alpha + b.px.g*beta + c.px.g*gamma;
+            newColor.b = a.px.b*alpha + b.px.b*beta + c.px.b*gamma;
 
             m_img.set(y, x, newColor); 
          }
-
       }
    }
+}
 
+float Canvas::implicitLine(PointAndColor input, PointAndColor p1, PointAndColor p2){
+   return ((float)((p1.y-p2.y)*input.x) + (float)((p2.x - p1.x)*input.y) + (float)(p1.x*p2.y) - (float)(p2.x*p1.y));
 }
 
