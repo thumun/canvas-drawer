@@ -250,9 +250,9 @@ void Canvas::makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c)
 
             // PointAndColor offscreen(-1, -1, m_currColor);
 
-            if ((alpha > 0 || implicitAlpha*implicitLinewithFloat(-1.1,-1.1,b,c) > 0) 
-                  && (beta > 0 || implicitBeta*implicitLinewithFloat(-1.1,-1.1,c,a) > 0)
-                  && (gamma > 0 || implicitGamma*implicitLinewithFloat(-1.1,-1.1,a,b) > 0))
+            if ((alpha > 0 || implicitAlpha*implicitLinewithFloat(-1.2,-1.2,b,c) > 0) 
+                  && (beta > 0 || implicitBeta*implicitLinewithFloat(-1.2,-1.2,c,a) > 0)
+                  && (gamma > 0 || implicitGamma*implicitLinewithFloat(-1.2,-1.2,a,b) > 0))
             {
                Pixel newColor;
 
@@ -275,5 +275,5 @@ float Canvas::implicitLine(PointAndColor input, PointAndColor p1, PointAndColor 
 
 float Canvas::implicitLinewithFloat(float inputX, float inputY, PointAndColor p1, PointAndColor p2)
 {
-   return ((float)((p1.y - p2.y) * inputX) + (float)((p2.x - p1.x) * inputY) + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
+   return ((float)((float)(p1.y - p2.y) * inputX) + (float)((float)(p2.x - p1.x) * inputY) + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
 }
