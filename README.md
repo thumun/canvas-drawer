@@ -47,6 +47,8 @@ canvas-drawer/build $ ../bin/draw_art
 
 TODO: Document the custom primitives supported by your canvas class
 
+(https://github.com/thumun/canvas-drawer/blob/main/primitiveTypes/line-color-interpolation.png)
+
 ## Results
 
 TODO: Show artworks using your class
