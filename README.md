@@ -45,9 +45,12 @@ canvas-drawer/build $ ../bin/draw_art
 
 ## Supported primitives
 
-TODO: Document the custom primitives supported by your canvas class
+LINE:
+![lineEX](https://github.com/thumun/canvas-drawer/blob/main/primitiveTypes/line-color-interpolation.png)
 
-(https://github.com/thumun/canvas-drawer/blob/main/primitiveTypes/line-color-interpolation.png)
+TRAINGLES:
+![triangle]([https://github.com/thumun/canvas-drawer/blob/main/primitiveTypes/line-color-interpolation.png](https://github.com/thumun/canvas-drawer/blob/main/primitiveTypes/triangle.png))
+![quadw/triangles](https://github.com/thumun/canvas-drawer/blob/main/primitiveTypes/quad.png)
 
 ## Results
 
