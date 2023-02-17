@@ -175,6 +175,7 @@ void Canvas::drawlineLow(PointAndColor a, PointAndColor b)
    }
 }
 
+/*
 void Canvas::makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c)
 {
    int ymin = min(a.y, b.y);
@@ -213,8 +214,66 @@ void Canvas::makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c)
       }
    }
 }
+*/
+
+void Canvas::makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c)
+{
+   int ymin = min(a.y, b.y);
+   ymin = min(ymin, c.y);
+
+   int ymax = max(a.y, b.y);
+   ymax = max(ymax, c.y);
+
+   int xmin = min(a.x, b.x);
+   xmin = min(xmin, c.x);
+
+   int xmax = max(a.x, b.x);
+   xmax = max(xmax, c.x);
+
+   float implicitAlpha = implicitLine(a, b, c);
+   float implicitBeta = implicitLine(b, c, a);
+   float implicitGamma = implicitLine(c, a, b);
+
+   for (int y = ymin; y < ymax; y++)
+   {
+      for (int x = xmin; x < xmax; x++)
+      {
+
+         PointAndColor pt(x, y, m_currColor);
+
+         float alpha = implicitLine(pt, b, c) / implicitAlpha;
+         float beta = implicitLine(pt, c, a) / implicitBeta;
+         float gamma = implicitLine(pt, a, b) / implicitGamma;
+
+         if (alpha >= 0 && beta >= 0 && gamma >= 0)
+         {
+
+            // PointAndColor offscreen(-1, -1, m_currColor);
+
+            if ((alpha > 0 || implicitAlpha*implicitLinewithFloat(-1.1,-1.1,b,c) > 0) 
+                  && (beta > 0 || implicitBeta*implicitLinewithFloat(-1.1,-1.1,c,a) > 0)
+                  && (gamma > 0 || implicitGamma*implicitLinewithFloat(-1.1,-1.1,a,b) > 0))
+            {
+               Pixel newColor;
+
+               newColor.r = a.px.r * alpha + b.px.r * beta + c.px.r * gamma;
+               newColor.g = a.px.g * alpha + b.px.g * beta + c.px.g * gamma;
+               newColor.b = a.px.b * alpha + b.px.b * beta + c.px.b * gamma;
+
+               m_img.set(y, x, newColor);
+            }
+         }
+      }
+   }
+}
+
 
 float Canvas::implicitLine(PointAndColor input, PointAndColor p1, PointAndColor p2)
 {
    return ((float)((p1.y - p2.y) * input.x) + (float)((p2.x - p1.x) * input.y) + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
+}
+
+float Canvas::implicitLinewithFloat(float inputX, float inputY, PointAndColor p1, PointAndColor p2)
+{
+   return ((float)((p1.y - p2.y) * inputX) + (float)((p2.x - p1.x) * inputY) + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
 }

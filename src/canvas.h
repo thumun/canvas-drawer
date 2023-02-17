@@ -96,6 +96,8 @@ namespace agl
       // the implicit line formula 
       // used in makeTriangle to calculate alpha, beta, and gamma
       float implicitLine(PointAndColor input, PointAndColor p1, PointAndColor p2);
+
+      float implicitLinewithFloat(float inputx, float inputy, PointAndColor p1, PointAndColor p2);
    };
 }
 
