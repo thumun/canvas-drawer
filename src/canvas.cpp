@@ -35,7 +35,8 @@ void Canvas::end()
          bresenham(verticies[i], verticies[i + 1]);
       }
    }
-   else if (m_currentType == PrimitiveType::TRIANGLES && verticies.size() % 3 == 0)
+   else if 
+   (m_currentType == PrimitiveType::TRIANGLES && verticies.size() % 3 == 0)
    {
       for (int i = 0; i < verticies.size(); i += 3)
       {
@@ -117,7 +118,9 @@ void Canvas::drawlineHigh(PointAndColor a, PointAndColor b)
    for (int y = a.y; y <= b.y; y++)
    {
 
-      float t = sqrt(pow(verticies[0].x - x, 2) + pow(verticies[0].y - y, 2)) / sqrt(pow(verticies[1].x - verticies[0].x, 2) + pow(verticies[1].y - verticies[0].y, 2));
+      float t = sqrt(pow(verticies[0].x - x, 2) + pow(verticies[0].y - y, 2)) / 
+               sqrt(pow(verticies[1].x - verticies[0].x, 2) 
+               + pow(verticies[1].y - verticies[0].y, 2));
 
       Pixel newColor;
       newColor.r = verticies[0].px.r * (1 - t) + verticies[1].px.r * (t);
@@ -154,7 +157,9 @@ void Canvas::drawlineLow(PointAndColor a, PointAndColor b)
    for (int x = a.x; x <= b.x; x++)
    {
 
-      float t = sqrt(pow(verticies[0].x - x, 2) + pow(verticies[0].y - y, 2)) / sqrt(pow(verticies[1].x - verticies[0].x, 2) + pow(verticies[1].y - verticies[0].y, 2));
+      float t = sqrt(pow(verticies[0].x - x, 2) + pow(verticies[0].y - y, 2)) / 
+               sqrt(pow(verticies[1].x - verticies[0].x, 2) +
+                pow(verticies[1].y - verticies[0].y, 2));
 
       Pixel newColor;
       newColor.r = verticies[0].px.r * (1 - t) + verticies[1].px.r * (t);
@@ -174,47 +179,6 @@ void Canvas::drawlineLow(PointAndColor a, PointAndColor b)
       }
    }
 }
-
-/*
-void Canvas::makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c)
-{
-   int ymin = min(a.y, b.y);
-   ymin = min(ymin, c.y);
-
-   int ymax = max(a.y, b.y);
-   ymax = max(ymax, c.y);
-
-   int xmin = min(a.x, b.x);
-   xmin = min(xmin, c.x);
-
-   int xmax = max(a.x, b.x);
-   xmax = max(xmax, c.x);
-
-   for (int y = ymin; y < ymax; y++)
-   {
-      for (int x = xmin; x < xmax; x++)
-      {
-
-         PointAndColor pt(x, y, m_currColor);
-
-         float alpha = implicitLine(pt, b, c) / implicitLine(a, b, c);
-         float beta = implicitLine(pt, c, a) / implicitLine(b, c, a);
-         float gamma = implicitLine(pt, a, b) / implicitLine(c, a, b);
-
-         if (alpha > 0 && beta > 0 && gamma > 0)
-         {
-            Pixel newColor;
-
-            newColor.r = a.px.r * alpha + b.px.r * beta + c.px.r * gamma;
-            newColor.g = a.px.g * alpha + b.px.g * beta + c.px.g * gamma;
-            newColor.b = a.px.b * alpha + b.px.b * beta + c.px.b * gamma;
-
-            m_img.set(y, x, newColor);
-         }
-      }
-   }
-}
-*/
 
 void Canvas::makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c)
 {
@@ -250,9 +214,12 @@ void Canvas::makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c)
 
             // PointAndColor offscreen(-1, -1, m_currColor);
 
-            if ((alpha > 0 || implicitAlpha*implicitLinewithFloat(-1.1,-2.3,b,c) > 0) 
-                  && (beta > 0 || implicitBeta*implicitLinewithFloat(-1.1,-2.3,c,a) > 0)
-                  && (gamma > 0 || implicitGamma*implicitLinewithFloat(-1.1,-2.3,a,b) > 0))
+            if ((alpha > 0 
+                  || implicitAlpha*implicitLinewithFloat(-1.1,-2.3,b,c) > 0) 
+                  && (beta > 0 
+                  || implicitBeta*implicitLinewithFloat(-1.1,-2.3,c,a) > 0)
+                  && (gamma > 0 
+                  || implicitGamma*implicitLinewithFloat(-1.1,-2.3,a,b) > 0))
             {
                Pixel newColor;
 
@@ -268,12 +235,17 @@ void Canvas::makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c)
 }
 
 
-float Canvas::implicitLine(PointAndColor input, PointAndColor p1, PointAndColor p2)
+float 
+Canvas::implicitLine(PointAndColor input, PointAndColor p1, PointAndColor p2)
 {
-   return ((float)((p1.y - p2.y) * input.x) + (float)((p2.x - p1.x) * input.y) + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
+   return ((float)((p1.y - p2.y) * input.x) + (float)((p2.x - p1.x) * input.y) 
+            + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
 }
 
-float Canvas::implicitLinewithFloat(float inputX, float inputY, PointAndColor p1, PointAndColor p2)
+float Canvas::implicitLinewithFloat
+(float inputX, float inputY, PointAndColor p1, PointAndColor p2)
 {
-   return ((float)((float)(p1.y - p2.y) * inputX) + (float)((float)(p2.x - p1.x) * inputY) + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
+   return ((float)((float)(p1.y - p2.y) * inputX) 
+            + (float)((float)(p2.x - p1.x) * inputY) 
+            + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
 }
