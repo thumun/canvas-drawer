@@ -75,9 +75,12 @@ namespace agl
 
       // https://en.wikipedia.org/wiki/Maurer_rose 
       // used above link for base formula to create maurer rose 
-      void maurerRose(int petals, int degrees);
+      void maurerRose(int petals, int degrees, PointAndColor center);
 
       // creates circle from triangles :) 
+      void triCircle(PointAndColor center, int resolution, float radius);
+
+      // circle from lines (lines are drawing edges of triangles)
       void stylizedCircle(PointAndColor center, int resolution, float radius);
 
 

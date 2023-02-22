@@ -12,7 +12,7 @@ Canvas::Canvas(int w, int h) : m_img(w, h)
 
 Canvas::~Canvas()
 {
-   
+   verticies.clear(); // does this go here 
 }
 
 void Canvas::save(const std::string &filename)
@@ -251,7 +251,7 @@ float Canvas::implicitLinewithFloat
             + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
 }
 
-void Canvas::stylizedCircle(PointAndColor center, int resolution, float radius){
+void Canvas::triCircle(PointAndColor center, int resolution, float radius){
 
    // resolution = how many triangles are drawn 
    // 1 = 4 (one for each quadrant)
@@ -274,7 +274,7 @@ void Canvas::stylizedCircle(PointAndColor center, int resolution, float radius){
 
 // gotta edit such that color can be changed & whole shape seen 
 // can change color via img class too (?) 
-void Canvas::maurerRose(int petals, int degrees){
+void Canvas::maurerRose(int petals, int degrees, PointAndColor center){
 
    verticies.clear(); // maybe not best way to do this 
 
@@ -286,10 +286,10 @@ void Canvas::maurerRose(int petals, int degrees){
    int x = 0; 
    int y = 0; 
 
-   Pixel testPx; 
-   testPx.r = 210/255; 
-   testPx.g = 185/255; 
-   testPx.b = 255/255; 
+   // Pixel testPx; 
+   // testPx.r = 210/255; 
+   // testPx.g = 185/255; 
+   // testPx.b = 255/255; 
 
    for (int theta = 0; theta < 361; theta++){
       k = theta * d * M_PI / 180;
@@ -300,13 +300,42 @@ void Canvas::maurerRose(int petals, int degrees){
       y = (int)(r * sin(k));
       // cout << "x: " << x << ", y: " << y << endl;
      
-      verticies.push_back(PointAndColor(x + m_height/2, y + m_width/2, testPx));
+      // verticies.push_back(PointAndColor(x + m_height/2, y + m_width/2, center.px));
+      verticies.push_back(PointAndColor(x + center.x, y + center.y, center.px));
+
 
    }
 
    // cycling through verticies made ^ 
+   // check logic 
    for (int i = 0; i < verticies.size()-1; i++){
       bresenham(verticies[i], verticies[i+1]); 
    }
 
+}
+
+void Canvas::stylizedCircle(PointAndColor center, int resolution, float radius){
+
+   verticies.clear(); 
+
+   float numTriangles = 360.0/resolution; 
+
+   for (int i = 0; i < resolution; i++){
+
+      PointAndColor a = PointAndColor(center.x, center.y, center.px);
+      PointAndColor b = PointAndColor(center.x + radius*cos(i*numTriangles), center.y + radius*sin(i*numTriangles), center.px);
+      PointAndColor c = PointAndColor(center.x + radius*cos((i+1)*numTriangles), center.y + radius*sin((i+1)*numTriangles), center.px);
+
+      verticies.push_back(a); 
+      verticies.push_back(b);
+      verticies.push_back(c);
+      
+   }
+
+   // check logic 
+   for (int i = 0; i < verticies.size(); i+=3){
+      bresenham(verticies[i], verticies[i+1]);
+      bresenham(verticies[i], verticies[i+2]);
+      bresenham(verticies[i+1], verticies[i+2]);
+   }
 }
