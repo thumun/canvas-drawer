@@ -12,6 +12,7 @@ Canvas::Canvas(int w, int h) : m_img(w, h)
 
 Canvas::~Canvas()
 {
+   
 }
 
 void Canvas::save(const std::string &filename)
@@ -118,14 +119,14 @@ void Canvas::drawlineHigh(PointAndColor a, PointAndColor b)
    for (int y = a.y; y <= b.y; y++)
    {
 
-      float t = sqrt(pow(verticies[0].x - x, 2) + pow(verticies[0].y - y, 2)) / 
-               sqrt(pow(verticies[1].x - verticies[0].x, 2) 
-               + pow(verticies[1].y - verticies[0].y, 2));
+      float t = sqrt(pow(a.x - x, 2) + pow(a.y - y, 2)) / 
+               sqrt(pow(b.x - a.x, 2) 
+               + pow(b.y - a.y, 2));
 
       Pixel newColor;
-      newColor.r = verticies[0].px.r * (1 - t) + verticies[1].px.r * (t);
-      newColor.g = verticies[0].px.g * (1 - t) + verticies[1].px.g * (t);
-      newColor.b = verticies[0].px.b * (1 - t) + verticies[1].px.b * (t);
+      newColor.r = a.px.r * (1 - t) + b.px.r * (t);
+      newColor.g = a.px.g * (1 - t) + b.px.g * (t);
+      newColor.b = a.px.b * (1 - t) + b.px.b * (t);
 
       m_img.set(y, x, newColor);
 
@@ -157,14 +158,14 @@ void Canvas::drawlineLow(PointAndColor a, PointAndColor b)
    for (int x = a.x; x <= b.x; x++)
    {
 
-      float t = sqrt(pow(verticies[0].x - x, 2) + pow(verticies[0].y - y, 2)) / 
-               sqrt(pow(verticies[1].x - verticies[0].x, 2) +
-                pow(verticies[1].y - verticies[0].y, 2));
+      float t = sqrt(pow(a.x - x, 2) + pow(a.y - y, 2)) / 
+               sqrt(pow(b.x - a.x, 2) +
+                pow(b.y - a.y, 2));
 
       Pixel newColor;
-      newColor.r = verticies[0].px.r * (1 - t) + verticies[1].px.r * (t);
-      newColor.g = verticies[0].px.g * (1 - t) + verticies[1].px.g * (t);
-      newColor.b = verticies[0].px.b * (1 - t) + verticies[1].px.b * (t);
+      newColor.r = a.px.r * (1 - t) + b.px.r * (t);
+      newColor.g = a.px.g * (1 - t) + b.px.g * (t);
+      newColor.b = a.px.b * (1 - t) + b.px.b * (t);
 
       m_img.set(y, x, newColor);
 
@@ -248,4 +249,64 @@ float Canvas::implicitLinewithFloat
    return ((float)((float)(p1.y - p2.y) * inputX) 
             + (float)((float)(p2.x - p1.x) * inputY) 
             + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
+}
+
+void Canvas::stylizedCircle(PointAndColor center, int resolution, float radius){
+
+   // resolution = how many triangles are drawn 
+   // 1 = 4 (one for each quadrant)
+
+   // idea: use unit circle to split circle 
+
+   // dividing circle into parts (360/resolution)
+   float numTriangles = 360.0/resolution; 
+
+   for (int i = 0; i < resolution; i++){
+
+      PointAndColor a = PointAndColor(center.x, center.y, center.px);
+      PointAndColor b = PointAndColor(center.x + radius*cos(i*numTriangles), center.y + radius*sin(i*numTriangles), center.px);
+      PointAndColor c = PointAndColor(center.x + radius*cos((i+1)*numTriangles), center.y + radius*sin((i+1)*numTriangles), center.px);
+
+      makeTriangle(a, b, c);
+   }
+
+}
+
+// gotta edit such that color can be changed & whole shape seen 
+// can change color via img class too (?) 
+void Canvas::maurerRose(int petals, int degrees){
+
+   verticies.clear(); // maybe not best way to do this 
+
+   int n = petals; 
+   int d = degrees; 
+
+   float k = 0; 
+   float r = 0; 
+   int x = 0; 
+   int y = 0; 
+
+   Pixel testPx; 
+   testPx.r = 210/255; 
+   testPx.g = 185/255; 
+   testPx.b = 255/255; 
+
+   for (int theta = 0; theta < 361; theta++){
+      k = theta * d * M_PI / 180;
+      // cout << k << endl;
+      r = 300 * sin(n * k);
+      // cout << r << endl;
+      x = (int)(r * cos(k));
+      y = (int)(r * sin(k));
+      // cout << "x: " << x << ", y: " << y << endl;
+     
+      verticies.push_back(PointAndColor(x + m_height/2, y + m_width/2, testPx));
+
+   }
+
+   // cycling through verticies made ^ 
+   for (int i = 0; i < verticies.size()-1; i++){
+      bresenham(verticies[i], verticies[i+1]); 
+   }
+
 }

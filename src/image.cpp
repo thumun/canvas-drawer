@@ -45,6 +45,10 @@ namespace agl
       m_width = width;
       m_height = height;
       m_channels = 3;
+      if (m_data != nullptr)
+      {
+         delete m_data;
+      }
       m_data = new char[m_width * m_height * m_channels];
       for (int i = 0; i < m_width * m_height * m_channels; i++)
       {
@@ -57,6 +61,10 @@ namespace agl
       m_width = orig.m_width;
       m_height = orig.m_height;
       m_channels = orig.m_channels;
+      if (m_data != nullptr)
+      {
+         delete m_data;
+      }
       m_data = new char[m_width * m_height * m_channels];
       for (int i = 0; i < m_width * m_height * m_channels; i++)
       {
@@ -93,6 +101,7 @@ namespace agl
       if (m_data != nullptr)
       {
          delete m_data;
+         m_data = nullptr;
       }
    }
 

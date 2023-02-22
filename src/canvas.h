@@ -73,6 +73,14 @@ namespace agl
       // Fill the canvas with the given background color
       void background(unsigned char r, unsigned char g, unsigned char b);
 
+      // https://en.wikipedia.org/wiki/Maurer_rose 
+      // used above link for base formula to create maurer rose 
+      void maurerRose(int petals, int degrees);
+
+      // creates circle from triangles :) 
+      void stylizedCircle(PointAndColor center, int resolution, float radius);
+
+
    private:
       Image m_img;
       int m_width; 
@@ -98,6 +106,7 @@ namespace agl
       float implicitLine(PointAndColor input, PointAndColor p1, PointAndColor p2);
 
       float implicitLinewithFloat(float inputx, float inputy, PointAndColor p1, PointAndColor p2);
+      
    };
 }
 
