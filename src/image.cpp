@@ -81,7 +81,7 @@ namespace agl
 
       if (m_data != nullptr)
       {
-         delete m_data;
+         delete[] m_data;
       }
 
       m_width = orig.m_width;
@@ -100,7 +100,7 @@ namespace agl
    {
       if (m_data != nullptr)
       {
-         delete m_data;
+         delete[] m_data;
          m_data = nullptr;
       }
    }
@@ -132,7 +132,7 @@ namespace agl
 
       if (m_data != nullptr)
       {
-         delete m_data;
+         delete[] m_data;
       }
 
       if (tempData != nullptr)

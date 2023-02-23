@@ -20,6 +20,17 @@ void Canvas::save(const std::string &filename)
    m_img.save(filename);
 }
 
+// look back at - may have mem error 
+void Canvas::alphablend(Image &otherImg, float alpha)
+{
+   m_img = m_img.alphaBlend(otherImg, alpha);
+}
+
+void Canvas::crop(int x, int y, int w, int h)
+{
+   m_img = m_img.subimage(x, y, w, h);
+}
+
 void Canvas::begin(PrimitiveType type)
 {
    m_currentType = type;
@@ -251,6 +262,11 @@ float Canvas::implicitLinewithFloat
             + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
 }
 
+void Canvas::makePoint(PointAndColor a)
+{
+   // use set to make the point 
+}
+
 void Canvas::triCircle(PointAndColor center, Pixel outer, int resolution, float radius){
 
    // resolution = how many triangles are drawn 
@@ -277,7 +293,7 @@ void Canvas::triCircle(PointAndColor center, Pixel outer, int resolution, float 
 // would be cool to add a central gradient 
 // farther away from center pt --> should add to pixel r g b 
 // but what's a better way to do this than if/else
-void Canvas::maurerRose(int petals, int degrees, PointAndColor center){
+void Canvas::maurerRose(int petals, int degrees, PointAndColor center, Pixel outer){
 
    verticies.clear(); // maybe not best way to do this 
 
@@ -312,8 +328,26 @@ void Canvas::maurerRose(int petals, int degrees, PointAndColor center){
    // cycling through verticies made ^ 
    // check logic 
    for (int i = 0; i < verticies.size()-1; i++){
-      bresenham(verticies[i], verticies[i+1]); 
+      PointAndColor other = PointAndColor(verticies[i+1].x, verticies[i+1].y, outer);
+      bresenham(verticies[i], other); 
    }
+
+}
+
+void Canvas::makeRectangle(PointAndColor center, int width, int height){
+
+   int minX = center.x - width/2;
+   int maxX = center.x + width/2;
+   int minY = center.y - height/2;
+   int maxY = center.y + height/2;
+
+   PointAndColor a = PointAndColor(minX, minY, center.px);
+   PointAndColor b = PointAndColor(minX, maxY, center.px);
+   PointAndColor c = PointAndColor(maxX, maxY, center.px);
+   PointAndColor d = PointAndColor(maxX, minY, center.px);
+
+   makeTriangle(a, c, b);
+   makeTriangle(a, d, c);
 
 }
 

@@ -9,28 +9,30 @@ int main(int argc, char** argv)
    // would be cool to add jitter or something 
 
    // display of maurer rose
-   Canvas drawer(800, 800);
-   drawer.background(0, 0, 0);
-   drawer.maurerRose(6, 71,  PointAndColor(400, 400, Pixel{210, 185, 255}));
-   // drawer.maurerRose(3, 47,  PointAndColor(400, 400, Pixel{0, 0, 0}));
+   // Canvas drawer(800, 800);
+   // drawer.background(0, 0, 0);
+   // drawer.maurerRose(6, 71,  PointAndColor(400, 400, Pixel{52, 235, 164}), Pixel{235, 52, 213});
+   // drawer.maurerRose(5, 97,  PointAndColor(0, 0, Pixel{245, 39, 12}), Pixel{52, 158, 235});
+   // drawer.maurerRose(5, 97,  PointAndColor(0, 800, Pixel{245, 39, 12}), Pixel{52, 158, 235});
+   // drawer.maurerRose(5, 97,  PointAndColor(800, 0, Pixel{245, 39, 12}), Pixel{52, 158, 235});
+   // drawer.maurerRose(5, 97,  PointAndColor(800, 800, Pixel{245, 39, 12}), Pixel{52, 158, 235});
 
-   drawer.save("rose.png");
+
+   // drawer.save("rose.png");
 
    // ----------------------------------------------------------------
 
-   // want to put clouds in the background 
-
    // ~All-seeing~
    // Canvas drawer(800, 800);
-   // drawer.background(1, 1, 1);
+   // drawer.background(255, 255, 255);
 
-   // // Image img;
-   // // img.load("../img/cloud.png");
-   // // drawer.alphaBlend(img, 0.5); // how to easily have img func in canvas class?
+   // Image img;
+   // img.load("../img/cloud.png"); // img problem (?) 
+   // drawer.alphablend(img, 0.5); 
 
    // // why is there a repetition --> half circle still visible 
-   // drawer.triCircle(PointAndColor(400, 400, Pixel{174, 4, 204}), Pixel{54,1,63}, 1000, 300);
-   // drawer.stylizedCircle(PointAndColor(400, 400, Pixel{1, 1, 1}), Pixel{54,1,63}, 1000, 300);
+   // drawer.triCircle(PointAndColor(400, 400, Pixel{245, 171, 12}), Pixel{12, 206, 245}, 1000, 300);
+   // drawer.stylizedCircle(PointAndColor(400, 400, Pixel{1, 1, 1}), Pixel{255, 230, 153}, 1000, 300);
    // drawer.save("eyeball.png");
 
    // ----------------------------------------------------------------
@@ -63,6 +65,16 @@ int main(int argc, char** argv)
    // }
 
    // drawer.save("pokatest2.png");
+
+   // ----------------------------------------------------------------
+
+   // flag of Kurdistan 
+
+   // Canvas drawer(800, 500);
+   // drawer.makeRectangle(PointAndColor(400, 50, Pixel{245, 39, 12}), 805, 200);
+   // drawer.makeRectangle(PointAndColor(400, 450, Pixel{41, 107, 46}), 805, 200);
+   // drawer.triCircle(PointAndColor(400, 250, Pixel{245, 183, 69}), Pixel{245, 183, 69}, 40, 150);
+   // drawer.save("kurdistan.png");
 
 }
 

@@ -26,7 +26,8 @@ namespace agl
    {
       UNDEFINED,
       LINES,
-      TRIANGLES
+      TRIANGLES,
+      POINTS   
    };
    struct PointAndColor
    {
@@ -49,6 +50,12 @@ namespace agl
 
       // Save to file
       void save(const std::string &filename);
+
+      // allows alphablend from image.h 
+      void alphablend(Image &otherImg, float alpha);
+
+      // ports over subImage from image.h 
+      void crop(int x, int y, int w, int h);
 
       // Draw primitives with a given type (either LINES or TRIANGLES)
       // For example, the following draws a red line followed by a green line
@@ -75,7 +82,7 @@ namespace agl
 
       // https://en.wikipedia.org/wiki/Maurer_rose 
       // used above link for base formula to create maurer rose 
-      void maurerRose(int petals, int degrees, PointAndColor center);
+      void maurerRose(int petals, int degrees, PointAndColor center, Pixel outer);
 
       // creates circle from triangles :) 
       void triCircle(PointAndColor center, Pixel outer, int resolution, float radius);
@@ -83,6 +90,8 @@ namespace agl
       // circle from lines (lines are drawing edges of triangles)
       void stylizedCircle(PointAndColor center, Pixel outer, int resolution, float radius);
 
+      // draws a rectangle based on center point, width, and height
+      void makeRectangle(PointAndColor center, int width, int height);
 
    private:
       Image m_img;
@@ -109,6 +118,9 @@ namespace agl
       float implicitLine(PointAndColor input, PointAndColor p1, PointAndColor p2);
 
       float implicitLinewithFloat(float inputx, float inputy, PointAndColor p1, PointAndColor p2);
+
+      // coloring given vertex 
+      void makePoint(PointAndColor a);
       
    };
 }
