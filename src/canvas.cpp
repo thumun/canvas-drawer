@@ -251,7 +251,7 @@ float Canvas::implicitLinewithFloat
             + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
 }
 
-void Canvas::triCircle(PointAndColor center, int resolution, float radius){
+void Canvas::triCircle(PointAndColor center, Pixel outer, int resolution, float radius){
 
    // resolution = how many triangles are drawn 
    // 1 = 4 (one for each quadrant)
@@ -264,8 +264,8 @@ void Canvas::triCircle(PointAndColor center, int resolution, float radius){
    for (int i = 0; i < resolution; i++){
 
       PointAndColor a = PointAndColor(center.x, center.y, center.px);
-      PointAndColor b = PointAndColor(center.x + radius*cos(i*numTriangles), center.y + radius*sin(i*numTriangles), center.px);
-      PointAndColor c = PointAndColor(center.x + radius*cos((i+1)*numTriangles), center.y + radius*sin((i+1)*numTriangles), center.px);
+      PointAndColor b = PointAndColor(center.x + radius*cos(i*numTriangles), center.y + radius*sin(i*numTriangles), outer);
+      PointAndColor c = PointAndColor(center.x + radius*cos((i+1)*numTriangles), center.y + radius*sin((i+1)*numTriangles), outer);
 
       makeTriangle(a, b, c);
    }
@@ -274,6 +274,9 @@ void Canvas::triCircle(PointAndColor center, int resolution, float radius){
 
 // gotta edit such that color can be changed & whole shape seen 
 // can change color via img class too (?) 
+// would be cool to add a central gradient 
+// farther away from center pt --> should add to pixel r g b 
+// but what's a better way to do this than if/else
 void Canvas::maurerRose(int petals, int degrees, PointAndColor center){
 
    verticies.clear(); // maybe not best way to do this 
@@ -314,7 +317,7 @@ void Canvas::maurerRose(int petals, int degrees, PointAndColor center){
 
 }
 
-void Canvas::stylizedCircle(PointAndColor center, int resolution, float radius){
+void Canvas::stylizedCircle(PointAndColor center, Pixel outer, int resolution, float radius){
 
    verticies.clear(); 
 
@@ -323,8 +326,8 @@ void Canvas::stylizedCircle(PointAndColor center, int resolution, float radius){
    for (int i = 0; i < resolution; i++){
 
       PointAndColor a = PointAndColor(center.x, center.y, center.px);
-      PointAndColor b = PointAndColor(center.x + radius*cos(i*numTriangles), center.y + radius*sin(i*numTriangles), center.px);
-      PointAndColor c = PointAndColor(center.x + radius*cos((i+1)*numTriangles), center.y + radius*sin((i+1)*numTriangles), center.px);
+      PointAndColor b = PointAndColor(center.x + radius*cos(i*numTriangles), center.y + radius*sin(i*numTriangles), outer);
+      PointAndColor c = PointAndColor(center.x + radius*cos((i+1)*numTriangles), center.y + radius*sin((i+1)*numTriangles), outer);
 
       verticies.push_back(a); 
       verticies.push_back(b);

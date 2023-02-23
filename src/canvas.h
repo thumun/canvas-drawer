@@ -78,10 +78,10 @@ namespace agl
       void maurerRose(int petals, int degrees, PointAndColor center);
 
       // creates circle from triangles :) 
-      void triCircle(PointAndColor center, int resolution, float radius);
+      void triCircle(PointAndColor center, Pixel outer, int resolution, float radius);
 
       // circle from lines (lines are drawing edges of triangles)
-      void stylizedCircle(PointAndColor center, int resolution, float radius);
+      void stylizedCircle(PointAndColor center, Pixel outer, int resolution, float radius);
 
 
    private:
