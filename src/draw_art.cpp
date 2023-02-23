@@ -6,8 +6,6 @@ using namespace agl;
 int main(int argc, char** argv)
 {
 
-   // would be cool to add jitter or something 
-
    // display of maurer rose
    // Canvas drawer(800, 800);
    // drawer.background(0, 0, 0);
@@ -41,30 +39,33 @@ int main(int argc, char** argv)
 
    // Polka Dots 
    // stole palette from here:https://www.schemecolor.com/pastel-color-tones.php 
-   // Canvas drawer(800, 800);
+   Canvas drawer(800, 800);
+   drawer.background(117, 232, 255);
 
-   // vector<Pixel> colors; 
-   // colors.push_back(Pixel{224, 187, 228});
-   // colors.push_back(Pixel{149, 125, 173});
-   // colors.push_back(Pixel{210, 145, 188});
-   // colors.push_back(Pixel{254, 200, 216});
-   // colors.push_back(Pixel{255, 223, 211});
-   // colors.push_back(Pixel{254, 200, 216});
-   // colors.push_back(Pixel{210, 145, 188});
-   // colors.push_back(Pixel{149, 125, 173});
-   // colors.push_back(Pixel{224, 187, 228});
+   vector<Pixel> colors; 
+   colors.push_back(Pixel{224, 187, 228});
+   colors.push_back(Pixel{149, 125, 173});
+   colors.push_back(Pixel{210, 145, 188});
+   colors.push_back(Pixel{254, 200, 216});
+   colors.push_back(Pixel{255, 223, 211});
+   colors.push_back(Pixel{254, 200, 216});
+   colors.push_back(Pixel{210, 145, 188});
+   colors.push_back(Pixel{149, 125, 173});
+   colors.push_back(Pixel{224, 187, 228});
 
-   // int counter = 0; 
+   int counter = 0; 
 
-   // for (int i = 0; i < 800; i+=100){
-   //    for (int j = 0; j < 800; j+=100){
-   //       drawer.triCircle(PointAndColor(i, j, colors[counter]), colors[counter+1], 360, 50);
-   //       counter += 1;  
-   //    }
-   //    counter = 0; 
-   // }
+   for (int i = 0; i < 800; i+=100){
+      for (int j = 0; j < 800; j+=100){
+         drawer.triCircle(PointAndColor(i, j, colors[counter]), colors[counter+1], 360, 50);
+         counter += 1;  
+      }
+      counter = 0; 
+   }
 
-   // drawer.save("pokatest2.png");
+   drawer.crop(0, 0, 800, 700);
+
+   drawer.save("pokatest2.png");
 
    // ----------------------------------------------------------------
 
