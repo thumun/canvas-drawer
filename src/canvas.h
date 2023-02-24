@@ -2,14 +2,24 @@
  * Author: Neha Thumu
  * Date: 2/13/2023
  * Description:
- * This canvas class handles the various functions involved in drawing lines
- * and triangles. There is also the option to set a background color and to set
+ * This canvas class handles the various functions involved in drawing lines,
+ * points, and triangles. 
+ * There is also the option to set a background color and to set
  * color(s) for lines and triangles. (multiple colors for a line/triangle will
  * have gradient)
+ * 
+ * To draw a point: you need one vertex.
  * To draw a line: you need two verticies.
  * To draw a triangle: you need three verticies.
  * End() will draw the line/triangles based on the verticies.
  * Begin() is the way to set if you want to draw a line or triangle.
+ * There are special functions for additional operations: 
+ * maurerRose(): creating rose curves (algorithm taken from wikipedia)
+ * triCircle(): creating a circle from triangles (using unit circle)
+ * sylizedCircle(): creating a circle from lines (using unit circle)
+ * makeRectangle(): creating a rectangle from center point, width, and height
+ *                   The rectangle itself made from 2 triangles 
+ * randomPoints(): creates a random array of points in given range  
  ----------------------------------------------*/
 
 #ifndef canvas_H_
@@ -82,13 +92,16 @@ namespace agl
 
       // https://en.wikipedia.org/wiki/Maurer_rose 
       // used above link for base formula to create maurer rose 
-      void maurerRose(int petals, int degrees, PointAndColor center, Pixel outer);
+      void maurerRose(int petals, int degrees, PointAndColor center, 
+                        Pixel outer);
 
       // creates circle from triangles :) 
-      void triCircle(PointAndColor center, Pixel outer, int resolution, float radius);
+      void triCircle(PointAndColor center, Pixel outer, int resolution, 
+                        float radius);
 
       // circle from lines (lines are drawing edges of triangles)
-      void stylizedCircle(PointAndColor center, Pixel outer, int resolution, float radius);
+      void stylizedCircle(PointAndColor center, Pixel outer, int resolution, 
+                           float radius);
 
       // draws a rectangle based on center point, width, and height
       void makeRectangle(PointAndColor center, int width, int height);
@@ -118,9 +131,13 @@ namespace agl
 
       // the implicit line formula 
       // used in makeTriangle to calculate alpha, beta, and gamma
-      float implicitLine(PointAndColor input, PointAndColor p1, PointAndColor p2);
+      float implicitLine(PointAndColor input, PointAndColor p1, 
+                           PointAndColor p2);
 
-      float implicitLinewithFloat(float inputx, float inputy, PointAndColor p1, PointAndColor p2);
+      // alternative line formula where first param from above is two different 
+      // params 
+      float implicitLinewithFloat(float inputx, float inputy, 
+                              PointAndColor p1, PointAndColor p2);
 
       // coloring given vertex 
       void makePoint(PointAndColor a);

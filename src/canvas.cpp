@@ -12,7 +12,7 @@ Canvas::Canvas(int w, int h) : m_img(w, h)
 
 Canvas::~Canvas()
 {
-   verticies.clear(); // does this go here 
+   verticies.clear(); 
 }
 
 void Canvas::save(const std::string &filename)
@@ -20,7 +20,7 @@ void Canvas::save(const std::string &filename)
    m_img.save(filename);
 }
 
-// look back at - may have mem error 
+// look back at - may have mem error
 void Canvas::alphablend(Image &otherImg, float alpha)
 {
    m_img = m_img.alphaBlend(otherImg, alpha);
@@ -48,7 +48,7 @@ void Canvas::end()
       }
    }
    else if 
-   (m_currentType == PrimitiveType::TRIANGLES && verticies.size() % 3 == 0)
+      (m_currentType == PrimitiveType::TRIANGLES && verticies.size() % 3 == 0)
    {
       for (int i = 0; i < verticies.size(); i += 3)
       {
@@ -64,7 +64,6 @@ void Canvas::vertex(int x, int y)
 
 void Canvas::color(unsigned char r, unsigned char g, unsigned char b)
 {
-   // m_var that holds curr color
    m_currColor.r = r;
    m_currColor.g = g;
    m_currColor.b = b;
@@ -80,9 +79,6 @@ void Canvas::background(unsigned char r, unsigned char g, unsigned char b)
    m_img.fill(bg);
 }
 
-// seems like my axes are swapped, is it supposed to be that way
-// fix: swap a.x and b.x
-// a.y and b.y
 void Canvas::bresenham(PointAndColor a, PointAndColor b)
 {
    int W = b.x - a.x;
@@ -130,9 +126,8 @@ void Canvas::drawlineHigh(PointAndColor a, PointAndColor b)
    for (int y = a.y; y <= b.y; y++)
    {
 
-      float t = sqrt(pow(a.x - x, 2) + pow(a.y - y, 2)) / 
-               sqrt(pow(b.x - a.x, 2) 
-               + pow(b.y - a.y, 2));
+      float t = sqrt(pow(a.x - x, 2) + pow(a.y - y, 2)) /
+                sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2));
 
       Pixel newColor;
       newColor.r = a.px.r * (1 - t) + b.px.r * (t);
@@ -169,9 +164,9 @@ void Canvas::drawlineLow(PointAndColor a, PointAndColor b)
    for (int x = a.x; x <= b.x; x++)
    {
 
-      float t = sqrt(pow(a.x - x, 2) + pow(a.y - y, 2)) / 
-               sqrt(pow(b.x - a.x, 2) +
-                pow(b.y - a.y, 2));
+      float t = sqrt(pow(a.x - x, 2) + pow(a.y - y, 2)) /
+                sqrt(pow(b.x - a.x, 2) +
+                     pow(b.y - a.y, 2));
 
       Pixel newColor;
       newColor.r = a.px.r * (1 - t) + b.px.r * (t);
@@ -226,12 +221,11 @@ void Canvas::makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c)
 
             // PointAndColor offscreen(-1, -1, m_currColor);
 
-            if ((alpha > 0 
-                  || implicitAlpha*implicitLinewithFloat(-1.1,-2.3,b,c) > 0) 
-                  && (beta > 0 
-                  || implicitBeta*implicitLinewithFloat(-1.1,-2.3,c,a) > 0)
-                  && (gamma > 0 
-                  || implicitGamma*implicitLinewithFloat(-1.1,-2.3,a,b) > 0))
+            if ((alpha > 0 || implicitAlpha * 
+            implicitLinewithFloat(-1.1, -2.3, b, c) > 0) && (beta > 0 
+            || implicitBeta * implicitLinewithFloat(-1.1, -2.3, c, a) > 0) 
+            && (gamma > 0 
+               || implicitGamma * implicitLinewithFloat(-1.1, -2.3, a, b) > 0))
             {
                Pixel newColor;
 
@@ -246,16 +240,16 @@ void Canvas::makeTriangle(PointAndColor a, PointAndColor b, PointAndColor c)
    }
 }
 
-
-float 
-Canvas::implicitLine(PointAndColor input, PointAndColor p1, PointAndColor p2)
+float Canvas::implicitLine(PointAndColor input, PointAndColor p1, 
+                           PointAndColor p2)
 {
-   return ((float)((p1.y - p2.y) * input.x) + (float)((p2.x - p1.x) * input.y) 
+   return ((float)((p1.y - p2.y) * input.x) 
+            + (float)((p2.x - p1.x) * input.y) 
             + (float)(p1.x * p2.y) - (float)(p2.x * p1.y));
 }
 
-float Canvas::implicitLinewithFloat
-(float inputX, float inputY, PointAndColor p1, PointAndColor p2)
+float Canvas::implicitLinewithFloat(float inputX, float inputY, 
+                                    PointAndColor p1, PointAndColor p2)
 {
    return ((float)((float)(p1.y - p2.y) * inputX) 
             + (float)((float)(p2.x - p1.x) * inputY) 
@@ -264,83 +258,77 @@ float Canvas::implicitLinewithFloat
 
 void Canvas::makePoint(PointAndColor a)
 {
-   // use set to make the point 
+   // use set to make the point
    m_img.set(a.x, a.y, a.px);
 }
 
-void Canvas::triCircle(PointAndColor center, Pixel outer, int resolution, float radius){
+void Canvas::triCircle(PointAndColor center, Pixel outer, int resolution, 
+                        float radius)
+{
 
-   // resolution = how many triangles are drawn 
+   // resolution = how many triangles are drawn
    // 1 = 4 (one for each quadrant)
 
-   // idea: use unit circle to split circle 
+   // using unit circle to split circle
 
    // dividing circle into parts (360/resolution)
-   float numTriangles = 360.0/resolution; 
+   float numTriangles = 360.0 / resolution;
 
-   for (int i = 0; i < resolution; i++){
+   for (int i = 0; i < resolution; i++)
+   {
 
       PointAndColor a = PointAndColor(center.x, center.y, center.px);
-      PointAndColor b = PointAndColor(center.x + radius*cos(i*numTriangles), center.y + radius*sin(i*numTriangles), outer);
-      PointAndColor c = PointAndColor(center.x + radius*cos((i+1)*numTriangles), center.y + radius*sin((i+1)*numTriangles), outer);
+      PointAndColor b = PointAndColor(center.x + radius * cos(i * numTriangles), 
+                           center.y + radius * sin(i * numTriangles), outer);
+      PointAndColor c = 
+               PointAndColor(center.x + radius * cos((i + 1) * numTriangles), 
+                  center.y + radius * sin((i + 1) * numTriangles), outer);
 
       makeTriangle(a, b, c);
    }
-
 }
 
-// gotta edit such that color can be changed & whole shape seen 
-// can change color via img class too (?) 
-// would be cool to add a central gradient 
-// farther away from center pt --> should add to pixel r g b 
-// but what's a better way to do this than if/else
-void Canvas::maurerRose(int petals, int degrees, PointAndColor center, Pixel outer){
+// supports two colors 
+void 
+Canvas::maurerRose(int petals, int degrees, PointAndColor center, Pixel outer)
+{
 
-   verticies.clear(); // maybe not best way to do this 
+   verticies.clear(); // just in case 
 
-   int n = petals; 
-   int d = degrees; 
+   int n = petals;
+   int d = degrees;
 
-   float k = 0; 
-   float r = 0; 
-   int x = 0; 
-   int y = 0; 
+   float k = 0;
+   float r = 0;
+   int x = 0;
+   int y = 0;
 
-   // Pixel testPx; 
-   // testPx.r = 210/255; 
-   // testPx.g = 185/255; 
-   // testPx.b = 255/255; 
-
-   for (int theta = 0; theta < 361; theta++){
+   for (int theta = 0; theta < 361; theta++)
+   {
       k = theta * d * M_PI / 180;
-      // cout << k << endl;
       r = 300 * sin(n * k);
-      // cout << r << endl;
       x = (int)(r * cos(k));
       y = (int)(r * sin(k));
-      // cout << "x: " << x << ", y: " << y << endl;
-     
-      // verticies.push_back(PointAndColor(x + m_height/2, y + m_width/2, center.px));
+
       verticies.push_back(PointAndColor(x + center.x, y + center.y, center.px));
-
-
    }
 
-   // cycling through verticies made ^ 
-   // check logic 
-   for (int i = 0; i < verticies.size()-1; i++){
-      PointAndColor other = PointAndColor(verticies[i+1].x, verticies[i+1].y, outer);
-      bresenham(verticies[i], other); 
+   // cycling through verticies made aboce to draw lines btwn them
+   for (int i = 0; i < verticies.size() - 1; i++)
+   {
+      PointAndColor other = 
+               PointAndColor(verticies[i + 1].x, verticies[i + 1].y, outer);
+      bresenham(verticies[i], other);
    }
-
 }
 
-void Canvas::makeRectangle(PointAndColor center, int width, int height){
+void Canvas::makeRectangle(PointAndColor center, int width, int height)
+{
 
-   int minX = center.x - width/2;
-   int maxX = center.x + width/2;
-   int minY = center.y - height/2;
-   int maxY = center.y + height/2;
+   int minX = center.x - width / 2;
+   int maxX = center.x + width / 2;
+   int minY = center.y - height / 2;
+   int maxY = center.y + height / 2;
 
    PointAndColor a = PointAndColor(minX, minY, center.px);
    PointAndColor b = PointAndColor(minX, maxY, center.px);
@@ -349,45 +337,56 @@ void Canvas::makeRectangle(PointAndColor center, int width, int height){
 
    makeTriangle(a, c, b);
    makeTriangle(a, d, c);
-
 }
 
-void Canvas::stylizedCircle(PointAndColor center, Pixel outer, int resolution, float radius){
+void Canvas::stylizedCircle(PointAndColor center, 
+                           Pixel outer, int resolution, float radius)
+{
 
-   verticies.clear(); 
+   verticies.clear();
 
-   float numTriangles = 360.0/resolution; 
+   float numTriangles = 360.0 / resolution;
 
-   for (int i = 0; i < resolution; i++){
+   for (int i = 0; i < resolution; i++)
+   {
+
+      // finding verticies via "unit circle"
+      // one vertex at center point 
+      // other two along circle 
 
       PointAndColor a = PointAndColor(center.x, center.y, center.px);
-      PointAndColor b = PointAndColor(center.x + radius*cos(i*numTriangles), center.y + radius*sin(i*numTriangles), outer);
-      PointAndColor c = PointAndColor(center.x + radius*cos((i+1)*numTriangles), center.y + radius*sin((i+1)*numTriangles), outer);
+      PointAndColor b = PointAndColor(center.x + radius * cos(i * numTriangles), 
+                           center.y + radius * sin(i * numTriangles), outer);
+      PointAndColor c = 
+               PointAndColor(center.x + radius * cos((i + 1) * numTriangles), 
+                  center.y + radius * sin((i + 1) * numTriangles), outer);
 
-      verticies.push_back(a); 
+      verticies.push_back(a);
       verticies.push_back(b);
       verticies.push_back(c);
-      
    }
 
-   // check logic 
-   for (int i = 0; i < verticies.size(); i+=3){
-      bresenham(verticies[i], verticies[i+1]);
-      bresenham(verticies[i], verticies[i+2]);
-      bresenham(verticies[i+1], verticies[i+2]);
+   // cycles through verticies to construct triangles 
+   for (int i = 0; i < verticies.size(); i += 3)
+   {
+      bresenham(verticies[i], verticies[i + 1]);
+      bresenham(verticies[i], verticies[i + 2]);
+      bresenham(verticies[i + 1], verticies[i + 2]);
    }
 }
 
+void Canvas::makeRandomPoints(Pixel cl, int width, int height)
+{
 
+   int random = 0;
 
-void Canvas::makeRandomPoints(Pixel cl, int width, int height){
-
-   int random = 0; 
-
-   for (int i = 0; i < height; i++){
-      for (int j = 0; j < width; j++){
-         random = rand() % 100; 
-         if (random <= 1){
+   for (int i = 0; i < height; i++)
+   {
+      for (int j = 0; j < width; j++)
+      {
+         random = rand() % 100;
+         if (random <= 1)  // lowered density to look like stars in sky 
+         {
             makePoint(PointAndColor(i, j, cl));
          }
       }
