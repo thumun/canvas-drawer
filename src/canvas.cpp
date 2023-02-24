@@ -265,6 +265,7 @@ float Canvas::implicitLinewithFloat
 void Canvas::makePoint(PointAndColor a)
 {
    // use set to make the point 
+   m_img.set(a.x, a.y, a.px);
 }
 
 void Canvas::triCircle(PointAndColor center, Pixel outer, int resolution, float radius){
@@ -374,5 +375,21 @@ void Canvas::stylizedCircle(PointAndColor center, Pixel outer, int resolution, f
       bresenham(verticies[i], verticies[i+1]);
       bresenham(verticies[i], verticies[i+2]);
       bresenham(verticies[i+1], verticies[i+2]);
+   }
+}
+
+
+
+void Canvas::makeRandomPoints(Pixel cl, int width, int height){
+
+   int random = 0; 
+
+   for (int i = 0; i < height; i++){
+      for (int j = 0; j < width; j++){
+         random = rand() % 100; 
+         if (random <= 1){
+            makePoint(PointAndColor(i, j, cl));
+         }
+      }
    }
 }

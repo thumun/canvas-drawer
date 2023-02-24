@@ -1,8 +1,7 @@
 // Copyright 2021, Aline Normoyle, alinen
 /**
- * This is the img operations file for Assignment 03: Canvas-Drawer.
+ * This is the img operations file for Assignment 02: pixmap-ops
  *
- * (copied from A02)
  * It has various operations/filters that can be applied to images. 
  * The operations are: resize, fliphorizontal, subimage, replace, swirl, add
  * subtract, difference, inverse, multiply, screen, darkest, lightest, 
@@ -45,10 +44,6 @@ namespace agl
       m_width = width;
       m_height = height;
       m_channels = 3;
-      // if (m_data != nullptr)
-      // {
-      //    delete m_data;
-      // }
       m_data = new char[m_width * m_height * m_channels];
       for (int i = 0; i < m_width * m_height * m_channels; i++)
       {
@@ -61,10 +56,6 @@ namespace agl
       m_width = orig.m_width;
       m_height = orig.m_height;
       m_channels = orig.m_channels;
-      // if (m_data != nullptr)
-      // {
-      //    delete m_data;
-      // }
       m_data = new char[m_width * m_height * m_channels];
       for (int i = 0; i < m_width * m_height * m_channels; i++)
       {
@@ -101,7 +92,6 @@ namespace agl
       if (m_data != nullptr)
       {
          delete[] m_data;
-         m_data = nullptr;
       }
    }
 
@@ -159,6 +149,7 @@ namespace agl
 
    Pixel Image::get(int row, int col) const
    {
+
       char red = m_data[m_channels * row * m_width + m_channels * col];
       char green = m_data[m_channels * row * m_width + m_channels * col + 1];
       char blue = m_data[m_channels * row * m_width + m_channels * col + 2];
@@ -169,11 +160,9 @@ namespace agl
 
    void Image::set(int row, int col, const Pixel &color)
    {
-      if (row < m_height && col < m_width){
-         m_data[m_channels * row * m_width + m_channels * col] = (char)color.r;
-         m_data[m_channels * row * m_width + m_channels * col + 1] = (char)color.g;
-         m_data[m_channels * row * m_width + m_channels * col + 2] = (char)color.b;
-      }
+      m_data[m_channels * row * m_width + m_channels * col] = (char)color.r;
+      m_data[m_channels * row * m_width + m_channels * col + 1] = (char)color.g;
+      m_data[m_channels * row * m_width + m_channels * col + 2] = (char)color.b;
    }
 
    Pixel Image::get(int i) const
@@ -514,12 +503,38 @@ namespace agl
    Image Image::alphaBlend(const Image &other, float alpha) const
    {
       Image result(m_width, m_height);
+
+
+      int widthOffset = 0; 
+      int heightOffset = 0;
+
+      if (other.width() < m_width){
+         widthOffset = m_width/2 - other.width()/2;
+      }
+      
+      if (other.height() < m_height){
+         heightOffset = m_height/2 - other.height()/2;
+      } 
+
       for (int i = 0; i < m_height; i++)
       {
          for (int j = 0; j < m_width; j++)
          {
-            Pixel otherPx = other.get(i, j);
+
+            Pixel otherPx; 
+            otherPx.r = 0; 
+            otherPx.g = 0; 
+            otherPx.b = 0; 
             Pixel thisPx = get(i, j);
+
+            if (((i >= heightOffset) && (i < other.height() + heightOffset))
+               && ((j >= widthOffset) && (j < other.width() + widthOffset))){
+                 
+               otherPx = other.get(i-heightOffset, j-widthOffset);
+     
+            } else {
+               otherPx = thisPx;
+            }
 
             Pixel resultPx;
             resultPx.r = otherPx.r * alpha + thisPx.r * (1 - alpha);
@@ -891,13 +906,6 @@ namespace agl
 
    void Image::fill(const Pixel &c)
    {
-      for (int i = 0; i < m_height; i++)
-      {
-         for (int j = 0; j < m_width; j++)
-         {
-            set(i, j, c);
-         }
-      }
    }
 
 } // namespace agl

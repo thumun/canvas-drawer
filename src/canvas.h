@@ -93,6 +93,9 @@ namespace agl
       // draws a rectangle based on center point, width, and height
       void makeRectangle(PointAndColor center, int width, int height);
 
+      // creates random dots in a specified range
+      void makeRandomPoints(Pixel cl, int width, int height);
+
    private:
       Image m_img;
       int m_width; 
