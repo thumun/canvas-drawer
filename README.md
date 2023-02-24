@@ -58,16 +58,21 @@ TRAINGLES:
 ## Results
 
 ~All-Seeing~
+
 ![eyeball](https://github.com/thumun/canvas-drawer/blob/main/myImg/eyeball.png)
 
 Polka Dots
+
 ![PolkaDots](https://github.com/thumun/canvas-drawer/blob/main/myImg/pokatest2.png)
 
 Night Sky
+
 ![Night](https://github.com/thumun/canvas-drawer/blob/main/myImg/nightsky.png)
 
 Rose Curve
-![rose]([https://github.com/thumun/canvas-drawer/blob/main/myImg/nightsky.png](https://github.com/thumun/canvas-drawer/blob/main/myImg/rose.png))
+
+![rose]((https://github.com/thumun/canvas-drawer/blob/main/myImg/rose.png))
 
 Kurdistan Flag
+
 ![flag](https://github.com/thumun/canvas-drawer/blob/main/myImg/kurdistan.png)
