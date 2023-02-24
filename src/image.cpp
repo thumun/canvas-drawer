@@ -160,6 +160,11 @@ namespace agl
 
    void Image::set(int row, int col, const Pixel &color)
    {
+
+      if (row < 0 || row >= m_height || col < 0 || col >= m_width){
+         return; 
+      } 
+
       m_data[m_channels * row * m_width + m_channels * col] = (char)color.r;
       m_data[m_channels * row * m_width + m_channels * col + 1] = (char)color.g;
       m_data[m_channels * row * m_width + m_channels * col + 2] = (char)color.b;
