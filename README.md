@@ -2,7 +2,7 @@
 
 Implements a simple drawing api
 
-[!eyeball](https://github.com/thumun/canvas-drawer/blob/main/myImg/eyeball.png)
+![eyeball](https://github.com/thumun/canvas-drawer/blob/main/myImg/eyeball.png)
 
 ## How to build
 
@@ -57,4 +57,17 @@ TRAINGLES:
 
 ## Results
 
-TODO: Show artworks using your class
+~All-Seeing~
+![eyeball](https://github.com/thumun/canvas-drawer/blob/main/myImg/eyeball.png)
+
+Polka Dots
+![PolkaDots](https://github.com/thumun/canvas-drawer/blob/main/myImg/pokatest2.png)
+
+Night Sky
+![Night](https://github.com/thumun/canvas-drawer/blob/main/myImg/nightsky.png)
+
+Rose Curve
+![rose]([https://github.com/thumun/canvas-drawer/blob/main/myImg/nightsky.png](https://github.com/thumun/canvas-drawer/blob/main/myImg/rose.png))
+
+Kurdistan Flag
+![flag](https://github.com/thumun/canvas-drawer/blob/main/myImg/kurdistan.png)
