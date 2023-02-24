@@ -71,7 +71,7 @@ Night Sky
 
 Rose Curve
 
-![rose]((https://github.com/thumun/canvas-drawer/blob/main/myImg/rose.png))
+![rose](https://github.com/thumun/canvas-drawer/blob/main/myImg/rose.png)
 
 Kurdistan Flag
 
