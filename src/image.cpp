@@ -911,6 +911,13 @@ namespace agl
 
    void Image::fill(const Pixel &c)
    {
+      for (int i = 0; i < m_height; i++)
+      {
+         for (int j = 0; j < m_width; j++)
+         {
+            set(i, j, c);
+         }
+      }
    }
 
 } // namespace agl

@@ -64,7 +64,7 @@ int main(int argc, char** argv)
       counter = 0; 
    }
 
-   polka.crop(0, 0, 800, 700);
+   polka.crop(0, 0, 700, 700);
 
    polka.save("pokatest2.png");
 
